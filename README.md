@@ -1,12 +1,10 @@
-# Devcontainer Configuration Template
-
-**CAVEAT**: This template is a work in progress. You might find some rough edges. But it will be updated over time.
+# Devcontainer Configuration Templates
 
 ## Description
 
-This repository contains a template for a development container configuration.
-It is intended to be used as a blueprint for setting up a development container
-for Javascript and Python based projects.
+This repository contains templates for development container environments in
+Visual Studio Code. These are intended to be used as blueprints with very little
+configuration needed to get started with a specific container environment.
 
 The template uses a configuration manager [Chezmoi](https://www.chezmoi.io/) to
 automatically pull your own dot files into the container. This way you can have
@@ -35,26 +33,26 @@ after the container is destroyed and recreated.
 
 - Create a new folder at the root of your project. Name it `.devcontainer`. Change directory into it.
 
-```sh
-cd .devcontainer
-```
+  ```sh
+  mkdir .devcontainer && cd .devcontainer
+  ```
 
 - Clone this template repo into the `.devcontainer` folder:
 
-```sh
-git clone git@gitlab.com:loxosceles/devcontainer-template.git . 
-```
+  ```sh
+  git clone git@gitlab.com:loxosceles/devcontainer-template.git .
+  ```
 
-- Remove the `.git` folder inside the current directory (which should still be the `.devcontainer`), so you effectively decouple
+  Remove the `.git` folder inside the current directory (which should still be the `.devcontainer`), so you effectively decouple
   the template repository from your project:
 
-```sh
-rm -rf .git
-```
+  ```sh
+  rm -rf .git
+  ```
 
 - Copy all files ending with `TEMPLATE` inside the `.devcontainer` folder to new files and name them exactly in the same way, just without the `_TEMPLATE` suffix, e.g., `.env_TEMPLATE` becomes `.env`.
 
-- Update the `.env` file with the HTTPS link to your personal dotfiles repository.
+- Update the `.env` file with your Github username. This is needed to be able to use the `chezmoi` tool to pull your dotfiles from your personal dotfiles repository.
 - Update the `chezmoi.toml` file with your own email address and name.
 - Change the `devcontainer.json` file to your needs. There are a few features and extension enabled by default in the `devcontainer.json` file. You can remove or add more features and extensions as needed, see the [Customization](#customization) section below. Keep in mind, building time will increase with more features and extensions.
 
@@ -204,4 +202,4 @@ Next time, when you rebuild your container, the `.zshrc` file will be pulled fro
 
 If you encounter any problems while using this template, please let me know, so that I can improve it.
 
-<dev@loxosceles.me
+dev at loxosceles dot me
