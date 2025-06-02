@@ -7,4 +7,6 @@ sudo chown -R "$USER":"$USER" "$HOME"/.config/chezmoi
 
 # Setup dotfiles
 echo "Setting up dotfiles..."
+TEMPLATE_TYPE="multipurpose"
+CHEZMOI_DOTFILES_REPOSITORY="https://github.com/${GITHUB_USERNAME}/devcontainer-${TEMPLATE_TYPE}-dotfiles"
 chezmoi init --apply "${CHEZMOI_DOTFILES_REPOSITORY}"
