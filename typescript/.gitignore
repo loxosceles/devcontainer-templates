@@ -1,0 +1,7 @@
+# Devcontainer files
+devcontainer.json
+chezmoi.toml
+.env
+
+# Mac OS
+.DS_Store

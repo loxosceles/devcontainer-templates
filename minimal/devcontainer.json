@@ -1,0 +1,39 @@
+{
+    "name": "Minimal Development",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "features": {},
+    "appPort": [],
+    "containerEnv": {
+        "TERM": "xterm-256color"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "usernamehw.errorlens",
+                "streetsidesoftware.code-spell-checker",
+                "eetami.whitespace-formatter"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "editor.formatOnSave": true,
+                "editor.formatOnType": false,
+                "editor.formatOnPaste": true,
+                "files.autoSave": "onFocusChange",
+                "terminal.integrated.fontFamily": "monospace"
+            }
+        }
+    },
+    "runArgs": [],
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "${localWorkspaceFolder}",
+            "target": "/workspace"
+        }
+    ],
+    "postCreateCommand": "echo 'Minimal container ready!'",
+    "remoteUser": "vscode"
+}
