@@ -1,0 +1,102 @@
+{
+    "name": "AWS Development",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "configureZshAsDefaultShell": true,
+            "installOhMyZsh": true,
+            "installOhMyZshConfig": true,
+            "upgradePackages": true,
+            "username": "vscode",
+            "userUid": "1001"
+        },
+        "ghcr.io/devcontainers/features/aws-cli:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+            "moby": true,
+            "installDockerBuildx": true,
+            "version": "latest"
+        },
+        "ghcr.io/rio/features/chezmoi:1": {},
+        "ghcr.io/devcontainers-contrib/features/tmux-apt-get:1": {},
+        "ghcr.io/christophermacgown/devcontainer-features/direnv:1": {
+            "autoEnable": true,
+            "architecture": "amd64",
+            "version": "latest"
+        }
+    },
+    "appPort": [],
+    "containerEnv": {
+        "SSH_CONTEXT": "personal",
+        "ZSH_PROFILE": "devcontainer",
+        "AWS_PAGER": "",
+        "SAM_CLI_TELEMETRY": "0"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "amazonwebservices.aws-toolkit-vscode",
+                "kddejong.vscode-cfn-lint",
+                "redhat.vscode-yaml",
+                "ms-azuretools.vscode-docker",
+                "usernamehw.errorlens",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "streetsidesoftware.code-spell-checker",
+                "eetami.whitespace-formatter",
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "ms-vscode.vscode-json"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "tmux",
+                "editor.formatOnSave": true,
+                "editor.formatOnType": false,
+                "editor.formatOnPaste": true,
+                "editor.formatOnSaveMode": "file",
+                "files.autoSave": "onFocusChange",
+                "yaml.schemas": {
+                    "https://raw.githubusercontent.com/aws/serverless-application-model/main/samtranslator/schema/schema.json": [
+                        "template.yaml",
+                        "template.yml",
+                        "**/templates/*.yaml",
+                        "**/templates/*.yml"
+                    ]
+                },
+                "cfnLint.validateUsingJsonSchema": true,
+                "aws.samcli.location": "/usr/local/bin/sam",
+                "[yaml]": {
+                    "editor.defaultFormatter": "redhat.vscode-yaml"
+                },
+                "[json]": {
+                    "editor.defaultFormatter": "ms-vscode.vscode-json"
+                },
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.black-formatter"
+                }
+            }
+        }
+    },
+    "runArgs": [
+        "--env-file",
+        ".devcontainer/.env"
+    ],
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/contexts/${localEnv:SSH_CONTEXT}",
+            "target": "/home/vscode/.ssh/contexts/${localEnv:SSH_CONTEXT}"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.aws",
+            "target": "/home/vscode/.aws"
+        }
+    ],
+    "postCreateCommand": "/bin/sh /usr/src/post_create.sh",
+    "remoteUser": "vscode"
+}

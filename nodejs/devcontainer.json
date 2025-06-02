@@ -1,0 +1,78 @@
+{
+    "name": "Node.js Development",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "configureZshAsDefaultShell": true,
+            "installOhMyZsh": true,
+            "installOhMyZshConfig": true,
+            "upgradePackages": true,
+            "username": "vscode",
+            "userUid": "1001"
+        },
+        "ghcr.io/rio/features/chezmoi:1": {},
+        "ghcr.io/devcontainers-contrib/features/tmux-apt-get:1": {},
+        "ghcr.io/christophermacgown/devcontainer-features/direnv:1": {
+            "autoEnable": true,
+            "architecture": "amd64",
+            "version": "latest"
+        }
+    },
+    "appPort": [
+        3000
+    ],
+    "containerEnv": {
+        "SSH_CONTEXT": "personal",
+        "ZSH_PROFILE": "devcontainer"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.vscode-node-azure-pack",
+                "usernamehw.errorlens",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "streetsidesoftware.code-spell-checker",
+                "eetami.whitespace-formatter",
+                "redhat.vscode-yaml",
+                "rvest.vs-code-prettier-eslint",
+                "esbenp.prettier-vscode"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "tmux",
+                "editor.formatOnSave": true,
+                "editor.formatOnType": false,
+                "editor.formatOnPaste": true,
+                "editor.formatOnSaveMode": "file",
+                "files.autoSave": "onFocusChange",
+                "editor.codeActionsOnSave": {
+                    "source.formatDocument": true,
+                    "source.fixAll.eslint": true
+                },
+                "[javascript][javascriptreact]": {
+                    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+                    "vs-code-prettier-eslint.prettierLast": false
+                },
+                "[json][jsonc]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode"
+                }
+            }
+        }
+    },
+    "runArgs": [
+        "--env-file",
+        ".devcontainer/.env"
+    ],
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/contexts/${localEnv:SSH_CONTEXT}",
+            "target": "/home/vscode/.ssh/contexts/${localEnv:SSH_CONTEXT}"
+        }
+    ],
+    "postCreateCommand": "/bin/sh /usr/src/post_create.sh",
+    "remoteUser": "vscode"
+}
