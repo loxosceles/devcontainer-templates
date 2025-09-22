@@ -8,7 +8,6 @@
         5000
     ],
     "containerEnv": {
-        "envfile": "./.devcontainer.env",
         "SSH_CONTEXT": "personal",
         "ZSH_PROFILE": "devcontainer",
         "PYTHONPATH": "/workspace"
@@ -46,11 +45,25 @@
             }
         }
     },
+    "runArgs": [
+        "--env-file",
+        ".devcontainer/.env"
+    ],
     "mounts": [
         {
             "type": "bind",
             "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/contexts/${localEnv:SSH_CONTEXT}",
             "target": "/home/vscode/.ssh/contexts/${localEnv:SSH_CONTEXT}"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.config/zsh",
+            "target": "/home/vscode/.config/zsh"
+        },
+        {
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.tmux",
+            "target": "/home/vscode/.tmux",
+            "type": "bind"
         }
     ],
     "postCreateCommand": "/bin/sh /usr/src/post_create.sh",
