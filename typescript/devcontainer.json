@@ -4,24 +4,7 @@
         "dockerfile": "Dockerfile",
         "context": "."
     },
-    "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {
-            "installZsh": true,
-            "configureZshAsDefaultShell": true,
-            "installOhMyZsh": true,
-            "installOhMyZshConfig": true,
-            "upgradePackages": true,
-            "username": "vscode",
-            "userUid": "1001"
-        },
-        "ghcr.io/rio/features/chezmoi:1": {},
-        "ghcr.io/devcontainers-contrib/features/tmux-apt-get:1": {},
-        "ghcr.io/christophermacgown/devcontainer-features/direnv:1": {
-            "autoEnable": true,
-            "architecture": "amd64",
-            "version": "latest"
-        }
-    },
+    "features": {},
     "appPort": [
         3000
     ],
@@ -39,8 +22,10 @@
                 "eetami.whitespace-formatter",
                 "redhat.vscode-yaml",
                 "rvest.vs-code-prettier-eslint",
+                "bradlc.vscode-tailwindcss",
+                "YoavBls.pretty-ts-errors",
                 "esbenp.prettier-vscode",
-                "bradlc.vscode-tailwindcss"
+                "dbaeumer.vscode-eslint"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "tmux",
@@ -56,7 +41,7 @@
                     "source.organizeImports": true
                 },
                 "[typescript][typescriptreact]": {
-                    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+                    "editor.defaultFormatter": "esbenp.prettier-vscode",
                     "vs-code-prettier-eslint.prettierLast": false
                 },
                 "[json][jsonc]": {
@@ -74,6 +59,16 @@
             "type": "bind",
             "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/contexts/${localEnv:SSH_CONTEXT}",
             "target": "/home/vscode/.ssh/contexts/${localEnv:SSH_CONTEXT}"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.config/zsh",
+            "target": "/home/vscode/.config/zsh"
+        },
+        {
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.tmux",
+            "target": "/home/vscode/.tmux",
+            "type": "bind"
         }
     ],
     "postCreateCommand": "/bin/sh /usr/src/post_create.sh",
