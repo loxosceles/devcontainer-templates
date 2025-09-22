@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Set project-specific tmux session name
+TMUX_SESSION="vsc-$(basename "$PWD")"
+export TMUX_SESSION
+echo "export TMUX_SESSION=\"vsc-$(basename "$PWD")\"" >>"$HOME/.zshrc.local"
+
 # Since we mounted the SSH context in the Dockerfile as root, we need to change ownership
 sudo chown -R "$USER":"$USER" "$HOME/.ssh"
 
@@ -12,12 +17,6 @@ Host *
   ServerAliveInterval 60
 EOF
 
-# Create the chezmoi config directory
-mkdir -p "$HOME"/.config/chezmoi
-# In the Dockerfile we copied the config file to /usr/src
-sudo mv /usr/src/chezmoi.toml "$HOME"/.config/chezmoi/chezmoi.toml
-sudo chown -R "$USER":"$USER" "$HOME"/.config/chezmoi
-
 # Setup container dotfiles
 echo "Setting up dotfiles..."
 CHEZMOI_DOTFILES_REPOSITORY="git@github.com:/${GITHUB_USERNAME}/devcontainer-dotfiles"
@@ -27,5 +26,7 @@ chezmoi init --apply "${CHEZMOI_DOTFILES_REPOSITORY}"
 ## but now we're backing it up and linking it to a mounted location.
 #
 # Enable the mounted zsh configuration which was mounted under $HOME/.config/zsh
-mv "$HOME"/.zshrc "$HOME"/.zshrc.bak
-ln -s "$HOME"/.config/zsh/.zshrc "$HOME"/.zshrc
+if [ -f "$HOME/.zshrc" ]; then
+	mv "$HOME"/.zshrc "$HOME"/.zshrc.bak
+fi
+ln -sf "$HOME"/.config/zsh/.zshrc "$HOME"/.zshrc
