@@ -11,6 +11,20 @@ automatically pull your own dot files into the container. This way you can have
 your own shell configuration, aliases, etc. available in the container, even
 after the container is destroyed and recreated.
 
+## Quick Start
+
+**Choose and download a template environment into your project:**
+
+Available environments: `python`, `nodejs`, `typescript`, `aws`, `multipurpose`, `minimal`.
+
+```sh
+# Example: Download Python environment template
+mkdir .devcontainer
+curl -L https://github.com/loxosceles/devcontainer-templates/archive/main.tar.gz | tar -xz --strip-components=2 -C .devcontainer devcontainer-templates-main/python
+```
+
+Replace `python` with your desired environment (e.g., `nodejs`, `typescript`, `aws`).
+
 ## Setup
 
 - Create a _personal_ dotfiles repository on github. This repository will contain
@@ -31,24 +45,7 @@ after the container is destroyed and recreated.
     ]
   ```
 
-- Create a new folder at the root of your project. Name it `.devcontainer`. Change directory into it.
-
-  ```sh
-  mkdir .devcontainer && cd .devcontainer
-  ```
-
-- Clone this template repo into the `.devcontainer` folder:
-
-  ```sh
-  git clone git@gitlab.com:loxosceles/devcontainer-template.git .
-  ```
-
-  Remove the `.git` folder inside the current directory (which should still be the `.devcontainer`), so you effectively decouple
-  the template repository from your project:
-
-  ```sh
-  rm -rf .git
-  ```
+- Download your desired environment template (see [Quick Start](#quick-start) above)
 
 - Copy all files ending with `TEMPLATE` inside the `.devcontainer` folder to new files and name them exactly in the same way, just without the `_TEMPLATE` suffix, e.g., `.env_TEMPLATE` becomes `.env`.
 
@@ -63,6 +60,8 @@ Note that this default configuration contains a `package.json` and
 
 Some of the features might be interesting, you can enable them by pasting the
 ones you want to use under the `features` key.
+
+**Note:** For better build performance, consider installing tools directly in the Dockerfile using `apt-get` or official installation scripts instead of using features. Features can be slower on rebuilds and increase container build times. The `python` container directory provides an example of this approach.
 
 ```json
     "ghcr.io/devcontainers-contrib/features/fzf:1": {
