@@ -1,4 +1,10 @@
 [data]
-    email = "<your-email>"
-    name = "<your-name>"
-    github_username = "<your-github-username>"
+email="YOUR-EMAIL"
+name="YOUR-NAME"
+
+# Change this to your liking
+zsh_theme="robbyrussell"
+
+[sourceVCS]
+autopush=false
+autocommit=true

@@ -14,16 +14,16 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     git pip libzip-dev unzip ranger gnupg curl direnv neovim tmux \
     && apt-get clean
 
-# Install uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.local/bin:$PATH"
+# Install uv and ruff system-wide
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    mv /root/.local/bin/uv /usr/local/bin/uv
 
-# Install ruff
-RUN curl -LsSf https://astral.sh/ruff/install.sh | sh
+RUN curl -LsSf https://astral.sh/ruff/install.sh | sh && \
+    mv /root/.local/bin/ruff /usr/local/bin/ruff
 
 # Install Python packages with uv
 COPY requirements.txt /usr/src/
-RUN /bin/bash -c "source $HOME/.local/bin/env && uv pip install --system --break-system-packages -r /usr/src/requirements.txt"
+RUN uv pip install --system --break-system-packages -r /usr/src/requirements.txt
 
 # Set zsh as default shell for vscode user (zsh already installed in base image)
 RUN chsh -s /usr/bin/zsh vscode
