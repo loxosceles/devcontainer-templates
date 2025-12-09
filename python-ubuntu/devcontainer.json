@@ -1,0 +1,97 @@
+{
+    "name": "Python Development (Ubuntu)",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "configureZshAsDefaultShell": true,
+            "installOhMyZsh": true,
+            "installOhMyZshConfig": true,
+            "upgradePackages": true,
+            "username": "vscode",
+            "userUid": "1001"
+        },
+        "ghcr.io/rio/features/chezmoi:1": {}
+    },
+    "appPort": [
+        5000
+    ],
+    "containerEnv": {
+        "SSH_CONTEXT": "personal",
+        "ZSH_PROFILE": "devcontainer",
+        "PYTHONPATH": "/workspace",
+        "HOME": "/home/vscode",
+        "USER": "vscode",
+        "TMUX_SESSION": "vsc-${containerWorkspaceFolderBasename}"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "charliermarsh.ruff",
+                "usernamehw.errorlens",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "streetsidesoftware.code-spell-checker",
+                "eetami.whitespace-formatter",
+                "redhat.vscode-yaml",
+                "foxundermoon.shell-format"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "tmux",
+                "editor.formatOnSave": true,
+                "editor.formatOnType": false,
+                "editor.formatOnPaste": true,
+                "editor.formatOnSaveMode": "file",
+                "files.autoSave": "onFocusChange",
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff",
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": true,
+                        "source.fixAll": true
+                    }
+                }
+            }
+        }
+    },
+    "runArgs": [
+        "--env-file",
+        ".devcontainer/.env"
+    ],
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/contexts/${localEnv:SSH_CONTEXT}",
+            "target": "/home/vscode/.ssh/contexts/${localEnv:SSH_CONTEXT}"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.config/zsh",
+            "target": "/home/vscode/.config/zsh",
+            "consistency": "cached"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.zsh_history",
+            "target": "/home/vscode/.zsh_history",
+            "consistency": "cached"
+        },
+        {
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.zsh_history_tmux",
+            "target": "/home/vscode/.zsh_history_tmux",
+            "type": "bind",
+            "consistency": "cached"
+        },
+        {
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.tmux",
+            "target": "/home/vscode/.tmux",
+            "type": "bind",
+            "consistency": "cached"
+        }
+    ],
+    "postCreateCommand": "/bin/sh /usr/src/post_create.sh",
+    "remoteUser": "vscode"
+}
