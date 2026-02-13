@@ -35,7 +35,8 @@
         "SSH_CONTEXT": "personal",
         "ZSH_PROFILE": "devcontainer",
         "AWS_PAGER": "",
-        "SAM_CLI_TELEMETRY": "0"
+        "SAM_CLI_TELEMETRY": "0",
+        "WORKSPACE_ROOT": "${containerWorkspaceFolder}"
     },
     "customizations": {
         "vscode": {

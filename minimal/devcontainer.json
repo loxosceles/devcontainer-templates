@@ -7,7 +7,8 @@
     "features": {},
     "appPort": [],
     "containerEnv": {
-        "TERM": "xterm-256color"
+        "TERM": "xterm-256color",
+        "WORKSPACE_ROOT": "${containerWorkspaceFolder}"
     },
     "customizations": {
         "vscode": {

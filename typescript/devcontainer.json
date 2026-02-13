@@ -12,7 +12,8 @@
         "SSH_CONTEXT": "personal",
         "ZSH_PROFILE": "devcontainer",
         "HOME": "/home/vscode",
-        "USER": "vscode"
+        "USER": "vscode",
+        "WORKSPACE_ROOT": "${containerWorkspaceFolder}"
     },
     "customizations": {
         "vscode": {
@@ -76,6 +77,11 @@
             "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.zsh_history_tmux",
             "target": "/home/vscode/.zsh_history_tmux",
             "type": "bind"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.config/ai-dev-rules",
+            "target": "/workspaces/${localWorkspaceFolderBasename}/docs/ai-dev-rules"
         }
     ],
     "postCreateCommand": "/bin/sh /usr/src/post_create.sh",

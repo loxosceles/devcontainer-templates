@@ -34,7 +34,8 @@
   ],
   "containerEnv": {
     "SSH_CONTEXT": "personal",
-    "ZSH_PROFILE": "devcontainer"
+    "ZSH_PROFILE": "devcontainer",
+    "WORKSPACE_ROOT": "${containerWorkspaceFolder}"
   },
   "customizations": {
     "vscode": {

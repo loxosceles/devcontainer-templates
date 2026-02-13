@@ -25,7 +25,8 @@
         "PYTHONPATH": "/workspace",
         "HOME": "/home/vscode",
         "USER": "vscode",
-        "TMUX_SESSION": "vsc-${containerWorkspaceFolderBasename}"
+        "TMUX_SESSION": "vsc-${containerWorkspaceFolderBasename}",
+        "WORKSPACE_ROOT": "${containerWorkspaceFolder}"
     },
     "customizations": {
         "vscode": {
