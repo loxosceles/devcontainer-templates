@@ -205,7 +205,8 @@ cd .devcontainer
 
 # Determine branch/ref to use
 BRANCH="${DEVCONTAINER_TEMPLATES_BRANCH:-main}"
-ARCHIVE_PREFIX="devcontainer-templates-${BRANCH}"
+# GitHub replaces slashes with dashes in archive names
+ARCHIVE_PREFIX="devcontainer-templates-${BRANCH//\//-}"
 
 # Download template
 print_info "Downloading $TEMPLATE template..."
