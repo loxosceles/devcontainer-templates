@@ -203,13 +203,17 @@ print_info "Setting up .devcontainer directory..."
 mkdir -p .devcontainer
 cd .devcontainer
 
+# Determine branch/ref to use
+BRANCH="${DEVCONTAINER_TEMPLATES_BRANCH:-main}"
+ARCHIVE_PREFIX="devcontainer-templates-${BRANCH}"
+
 # Download template
 print_info "Downloading $TEMPLATE template..."
-curl -fsSL "${REPO_URL}/archive/main.tar.gz" | tar -xz --strip-components=2 "devcontainer-templates-main/$TEMPLATE"
+curl -fsSL "${REPO_URL}/archive/${BRANCH}.tar.gz" | tar -xz --strip-components=2 "${ARCHIVE_PREFIX}/$TEMPLATE"
 
 # Download common scripts
 print_info "Downloading common scripts..."
-curl -fsSL "${REPO_URL}/archive/main.tar.gz" | tar -xz --strip-components=2 "devcontainer-templates-main/common"
+curl -fsSL "${REPO_URL}/archive/${BRANCH}.tar.gz" | tar -xz --strip-components=2 "${ARCHIVE_PREFIX}/common"
 
 # Process template files
 print_info "Configuring template files..."
