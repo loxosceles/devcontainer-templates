@@ -13,11 +13,38 @@ after the container is destroyed and recreated.
 
 All templates use a [common post-create script](common/README.md) for consistent setup across project types. See the Common Scripts section below for details.
 
+## Prerequisites
+
+- Docker Desktop installed and running
+- VS Code with Dev Containers extension
+- SSH keys in `~/.ssh/` (generate with `ssh-keygen -t ed25519 -C "your@email.com"`)
+- Git configured with your name and email
+
 ## Quick Start
 
-**Choose and download a template environment into your project:**
+### Automated Setup (Recommended)
 
-Available environments: `python-minimal`, `python-ubuntu`, `nodejs`, `typescript`, `aws`, `multipurpose`, `minimal`.
+Run the setup script for interactive configuration:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/loxosceles/devcontainer-templates/main/setup.sh | bash
+```
+
+Or with arguments for automation (useful for LLMs):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/loxosceles/devcontainer-templates/main/setup.sh | bash -s -- \
+  --template typescript \
+  --github-user myusername \
+  --email dev@example.com \
+  --name "Dev User"
+```
+
+Available templates: `typescript`, `python-minimal`, `python-ubuntu`, `nodejs`, `aws`, `multipurpose`, `minimal`
+
+### Manual Setup
+
+If you prefer manual control:
 
 ```sh
 # Example: Download TypeScript environment template
@@ -28,11 +55,25 @@ curl -L https://github.com/loxosceles/devcontainer-templates/archive/main.tar.gz
 curl -L https://github.com/loxosceles/devcontainer-templates/archive/main.tar.gz | tar -xz --strip-components=2 -C .devcontainer devcontainer-templates-main/common
 ```
 
-Replace `typescript` with your desired environment (e.g., `python-minimal`, `nodejs`, `aws`).
+Replace `typescript` with your desired environment.
 
 **Important**: Always download both the template AND the `common` directory, as templates depend on shared scripts.
 
-## Setup
+Then follow the [Manual Configuration](#manual-configuration) steps below.
+
+## Template Comparison
+
+| Template | Best For | Key Features |
+|----------|----------|--------------|
+| `typescript` | Full-stack TypeScript projects | Node.js, TypeScript, ESLint, Prettier, Tailwind |
+| `python-minimal` | Lightweight Python development | Python 3, pip, minimal dependencies |
+| `python-ubuntu` | Full Python development | Python 3, pip, system tools, Ubuntu base |
+| `nodejs` | Node.js/JavaScript projects | Node.js LTS, npm, common dev tools |
+| `aws` | AWS development & deployment | AWS CLI, SAM CLI, Docker-in-Docker |
+| `multipurpose` | Multi-language projects | Python, Node.js, Docker, flexible setup |
+| `minimal` | Bare-bones container | Basic shell, minimal overhead |
+
+## Manual Configuration
 
 - Create a _personal_ dotfiles repository on github. This repository will contain
   your dotfiles and configuration files. It can be empty initially. It is
