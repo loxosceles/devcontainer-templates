@@ -1,11 +1,16 @@
 #!/bin/sh
+# Main post-create script - sources the common setup
+# See common/post_create.sh for the universal setup logic
 
-mkdir -p "$HOME"/.config/chezmoi
-# In the Dockerfile we copied the config file to /usr/src
-sudo mv /usr/src/chezmoi.toml "$HOME"/.config/chezmoi/chezmoi.toml
-sudo chown -R "$USER":"$USER" "$HOME"/.config/chezmoi
+# Source the common post-create script
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+COMMON_SCRIPT="${SCRIPT_DIR}/../common/post_create.sh"
 
-# Setup dotfiles
-echo "Setting up dotfiles..."
-CHEZMOI_DOTFILES_REPOSITORY="https://github.com/${GITHUB_USERNAME}/devcontainer-dotfiles"
-chezmoi init --apply "${CHEZMOI_DOTFILES_REPOSITORY}"
+if [ -f "$COMMON_SCRIPT" ]; then
+  echo "Running common post-create setup..."
+  . "$COMMON_SCRIPT"
+else
+  echo "Error: Common post-create script not found at: $COMMON_SCRIPT"
+  echo "Please ensure the common directory exists in devcontainer-templates"
+  exit 1
+fi
