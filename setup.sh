@@ -210,11 +210,11 @@ ARCHIVE_PREFIX="devcontainer-templates-${BRANCH//\//-}"
 
 # Download template
 print_info "Downloading $TEMPLATE template..."
-curl -fsSL "${REPO_URL}/archive/${BRANCH}.tar.gz" | tar -xz --strip-components=2 "${ARCHIVE_PREFIX}/$TEMPLATE"
+curl -fsSL "${REPO_URL}/archive/${BRANCH}.tar.gz" | tar -xz --strip-components=1 "${ARCHIVE_PREFIX}/$TEMPLATE"
 
 # Download common scripts
 print_info "Downloading common scripts..."
-curl -fsSL "${REPO_URL}/archive/${BRANCH}.tar.gz" | tar -xz --strip-components=2 "${ARCHIVE_PREFIX}/common"
+curl -fsSL "${REPO_URL}/archive/${BRANCH}.tar.gz" | tar -xz --strip-components=1 "${ARCHIVE_PREFIX}/common"
 
 # Process template files
 print_info "Configuring template files..."
