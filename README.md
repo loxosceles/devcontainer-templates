@@ -11,25 +11,32 @@ automatically pull your own dot files into the container. This way you can have
 your own shell configuration, aliases, etc. available in the container, even
 after the container is destroyed and recreated.
 
+All templates use a [common post-create script](common/README.md) for consistent setup across project types. See the Common Scripts section below for details.
+
 ## Quick Start
 
 **Choose and download a template environment into your project:**
 
-Available environments: `python`, `nodejs`, `typescript`, `aws`, `multipurpose`, `minimal`.
+Available environments: `python-minimal`, `python-ubuntu`, `nodejs`, `typescript`, `aws`, `multipurpose`, `minimal`.
 
 ```sh
-# Example: Download Python environment template
+# Example: Download TypeScript environment template
 mkdir .devcontainer
-curl -L https://github.com/loxosceles/devcontainer-templates/archive/main.tar.gz | tar -xz --strip-components=2 -C .devcontainer devcontainer-templates-main/python
+curl -L https://github.com/loxosceles/devcontainer-templates/archive/main.tar.gz | tar -xz --strip-components=2 -C .devcontainer devcontainer-templates-main/typescript
+
+# Also download the common scripts
+curl -L https://github.com/loxosceles/devcontainer-templates/archive/main.tar.gz | tar -xz --strip-components=2 -C .devcontainer devcontainer-templates-main/common
 ```
 
-Replace `python` with your desired environment (e.g., `nodejs`, `typescript`, `aws`).
+Replace `typescript` with your desired environment (e.g., `python-minimal`, `nodejs`, `aws`).
+
+**Important**: Always download both the template AND the `common` directory, as templates depend on shared scripts.
 
 ## Setup
 
 - Create a _personal_ dotfiles repository on github. This repository will contain
   your dotfiles and configuration files. It can be empty initially. It is
-  recommend to go by the naming convention `dotfiles`.
+  recommend to go by the naming convention `devcontainer-dotfiles`.
 
 - Make sure that you have your ssh keys ready inside `${HOME}/.ssh` folder on
   your local machine. All keys inside the default `.ssh` directory will be
@@ -196,6 +203,35 @@ echo "echo 'Loading .envrc'" > .envrc
 ```
 
 Next time, when you rebuild your container, the `.zshrc` file will be pulled from your dotfiles repository automatically and the change is applied without the need for further action.
+
+## Template Structure
+
+### Common Scripts
+
+All templates now share common setup logic in the `common/` directory:
+
+- **`common/post_create.sh`** - Universal post-create script handling SSH, dotfiles, ZSH, and AI agent setup
+- **`common/README.md`** - Documentation for common scripts
+
+Each template's `post_create.sh` sources the common script and can optionally provide a `post_create_project.sh` for template-specific setup.
+
+**Benefits**:
+- Single source of truth for common setup
+- Easy maintenance (update once, applies everywhere)
+- Project-agnostic (works for TypeScript, Python, Node.js, etc.)
+- Graceful degradation (skips optional features if not available)
+
+See [Common Scripts README](common/README.md) for detailed documentation.
+
+### AI Agent Template Support
+
+Templates automatically set up AI agent templates if your project uses [ai-coding-standards](https://github.com/loxosceles/ai-coding-standards):
+
+1. Detects `docs/ai-dev-rules/agents` directory
+2. Symlinks agent templates to `.github/agents` and `.amazonq/agents`
+3. Makes agents available in GitHub Copilot and Amazon Q
+
+Projects without AI agents gracefully skip this step.
 
 ## Maintainer(s)
 
