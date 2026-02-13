@@ -26,7 +26,7 @@ OPTIONS:
     --github-user <user>    GitHub username
     --email <email>         Email for git config
     --name <name>           Full name for git config
-    --ssh-context <name>    SSH context to use (default: personal)
+    --ssh-context <name>    SSH context to use (default: project directory name)
     --help                  Show this help message
 
 EXAMPLES:
@@ -54,7 +54,7 @@ TEMPLATE=""
 GITHUB_USER=""
 EMAIL=""
 NAME=""
-SSH_CONTEXT="personal"
+SSH_CONTEXT=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -136,21 +136,44 @@ if [[ -z "$NAME" ]]; then
     fi
 fi
 
+# Default SSH context to current directory name if not specified
+if [[ -z "$SSH_CONTEXT" ]]; then
+    DEFAULT_CONTEXT=$(basename "$PWD")
+    read -p "SSH context name [$DEFAULT_CONTEXT]: " input
+    SSH_CONTEXT="${input:-$DEFAULT_CONTEXT}"
+fi
+
 # Validate SSH context setup
 print_info "Checking SSH context setup..."
 
 if [[ ! -d "$HOME/.ssh/contexts" ]]; then
-    print_error "SSH contexts directory not found: $HOME/.ssh/contexts"
-    print_info "Create it with: mkdir -p $HOME/.ssh/contexts/personal"
-    print_info "Then add your SSH keys to $HOME/.ssh/contexts/personal/"
+    print_error "SSH contexts directory not found"
+    echo ""
+    echo "Create an SSH context for this project:"
+    echo "  mkdir -p ~/.ssh/contexts/$SSH_CONTEXT"
+    echo "  ssh-keygen -t ed25519 -C \"$EMAIL\" -f ~/.ssh/contexts/$SSH_CONTEXT/id_ed25519"
+    echo "  cat > ~/.ssh/contexts/$SSH_CONTEXT/config << 'EOF'"
+    echo "Host github.com"
+    echo "  IdentityFile ~/.ssh/contexts/$SSH_CONTEXT/id_ed25519"
+    echo "EOF"
+    echo ""
+    echo "Then add the public key to GitHub and re-run this script."
     exit 1
 fi
 
 # Check if at least one context exists
 if [[ -z "$(ls -A $HOME/.ssh/contexts 2>/dev/null)" ]]; then
-    print_error "No SSH contexts found in $HOME/.ssh/contexts"
-    print_info "Create a context: mkdir -p $HOME/.ssh/contexts/personal"
-    print_info "Add your SSH keys to that directory"
+    print_error "No SSH contexts found"
+    echo ""
+    echo "Create an SSH context for this project:"
+    echo "  mkdir -p ~/.ssh/contexts/$SSH_CONTEXT"
+    echo "  ssh-keygen -t ed25519 -C \"$EMAIL\" -f ~/.ssh/contexts/$SSH_CONTEXT/id_ed25519"
+    echo "  cat > ~/.ssh/contexts/$SSH_CONTEXT/config << 'EOF'"
+    echo "Host github.com"
+    echo "  IdentityFile ~/.ssh/contexts/$SSH_CONTEXT/id_ed25519"
+    echo "EOF"
+    echo ""
+    echo "Then add the public key to GitHub and re-run this script."
     exit 1
 fi
 
@@ -158,8 +181,18 @@ print_success "SSH contexts found: $(ls $HOME/.ssh/contexts | tr '\n' ' ')"
 
 # Verify the selected context exists
 if [[ ! -d "$HOME/.ssh/contexts/$SSH_CONTEXT" ]]; then
-    print_error "SSH context '$SSH_CONTEXT' not found in $HOME/.ssh/contexts"
-    print_info "Available contexts: $(ls $HOME/.ssh/contexts | tr '\n' ' ')"
+    print_error "SSH context '$SSH_CONTEXT' not found"
+    echo ""
+    echo "Create this SSH context:"
+    echo "  mkdir -p ~/.ssh/contexts/$SSH_CONTEXT"
+    echo "  ssh-keygen -t ed25519 -C \"$EMAIL\" -f ~/.ssh/contexts/$SSH_CONTEXT/id_ed25519"
+    echo "  cat > ~/.ssh/contexts/$SSH_CONTEXT/config << 'EOF'"
+    echo "Host github.com"
+    echo "  IdentityFile ~/.ssh/contexts/$SSH_CONTEXT/id_ed25519"
+    echo "EOF"
+    echo ""
+    echo "Available contexts: $(ls $HOME/.ssh/contexts | tr '\n' ' ')"
+    echo "Then add the public key to GitHub and re-run this script."
     exit 1
 fi
 
@@ -195,11 +228,12 @@ fi
 
 cd ..
 
-# Update SSH_CONTEXT in devcontainer.json if not using default
-if [[ "$SSH_CONTEXT" != "personal" ]]; then
-    print_info "Updating SSH_CONTEXT to '$SSH_CONTEXT' in devcontainer.json..."
-    sed -i.bak "s/\"SSH_CONTEXT\": \"personal\"/\"SSH_CONTEXT\": \"$SSH_CONTEXT\"/" .devcontainer/devcontainer.json
-    rm -f .devcontainer/devcontainer.json.bak
+# Update SSH_CONTEXT in devcontainer.json
+print_info "Updating SSH_CONTEXT to '$SSH_CONTEXT' in devcontainer.json..."
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' "s/\"SSH_CONTEXT\": \"personal\"/\"SSH_CONTEXT\": \"$SSH_CONTEXT\"/" .devcontainer/devcontainer.json
+else
+    sed -i "s/\"SSH_CONTEXT\": \"personal\"/\"SSH_CONTEXT\": \"$SSH_CONTEXT\"/" .devcontainer/devcontainer.json
 fi
 
 print_success "Setup complete!"
