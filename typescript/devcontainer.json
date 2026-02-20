@@ -11,8 +11,6 @@
     "SSH_CONTEXT": "default",
     "ZSH_PROFILE": "devcontainer",
     "AWS_PAGER": "",
-    "HOME": "/home/node",
-    "USER": "node",
     "WORKSPACE_ROOT": "${containerWorkspaceFolder}",
     "TMUX_SESSION": "vsc-${containerWorkspaceFolderBasename}",
     "GITHUB_USERNAME": "",
