@@ -4,7 +4,9 @@
     "dockerfile": "Dockerfile",
     "context": "."
   },
-  "appPort": [3000],
+  "appPort": [
+    3000
+  ],
   "containerEnv": {
     "SSH_CONTEXT": "default",
     "ZSH_PROFILE": "devcontainer",
@@ -12,7 +14,10 @@
     "HOME": "/home/vscode",
     "USER": "vscode",
     "WORKSPACE_ROOT": "${containerWorkspaceFolder}",
-    "TMUX_SESSION": "vsc-${containerWorkspaceFolderBasename}"
+    "TMUX_SESSION": "vsc-${containerWorkspaceFolderBasename}",
+    "GITHUB_USERNAME": "",
+    "GIT_NAME": "",
+    "GIT_EMAIL": ""
   },
   "customizations": {
     "vscode": {
@@ -52,7 +57,6 @@
       }
     }
   },
-  "runArgs": ["--env-file", ".devcontainer/.env"],
   "mounts": [],
   "postCreateCommand": "/bin/sh /usr/src/post_create.sh",
   "remoteUser": "vscode"
