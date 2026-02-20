@@ -9,7 +9,7 @@ set -e  # Exit on error
 # ============================================================================
 
 # Workspace root (project directory)
-WORKSPACE_ROOT="${WORKSPACE_ROOT:-/workspaces/$(basename "$PWD")}"
+WORKSPACE_ROOT="${WORKSPACE_ROOT:-$PWD}"
 
 # SSH configuration
 SSH_CONTEXT="${SSH_CONTEXT:-default}"
