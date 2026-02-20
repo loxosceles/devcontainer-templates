@@ -32,6 +32,15 @@ else
   echo "Info: No ZSH config mounted, skipping symlink"
 fi
 
+# ─── tmux ─────────────────────────────────────────────────────────────────────
+echo "Setting up tmux configuration..."
+if [ -f "$HOME/.tmux/tmux.conf" ]; then
+  ln -sf "$HOME/.tmux/tmux.conf" "$HOME/.tmux.conf"
+  echo "✓ Linked tmux configuration from $HOME/.tmux/tmux.conf"
+else
+  echo "Info: No tmux config found at $HOME/.tmux/tmux.conf, skipping"
+fi
+
 # ─── AI Agent Templates ───────────────────────────────────────────────────────
 echo "Setting up AI agent templates..."
 if [ ! -d "$AGENT_SOURCE_DIR" ]; then
