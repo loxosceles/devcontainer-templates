@@ -3,7 +3,9 @@ FROM mcr.microsoft.com/devcontainers/typescript-node:${VARIANT}
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-    neovim ranger tmux direnv zsh \
+    neovim ranger tmux direnv zsh unzip \
+    && curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip \
+    && unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && usermod -s /usr/bin/zsh node
