@@ -22,18 +22,19 @@
       "extensions": [
         "ms-vscode.vscode-typescript-next",
         "usernamehw.errorlens",
-        "VisualStudioExptTeam.vscodeintellicode",
         "streetsidesoftware.code-spell-checker",
         "eetami.whitespace-formatter",
         "redhat.vscode-yaml",
-        "rvest.vs-code-prettier-eslint",
-        "bradlc.vscode-tailwindcss",
-        "YoavBls.pretty-ts-errors",
         "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint"
+        "bradlc.vscode-tailwindcss",
+        "amazonwebservices.aws-toolkit-vscode",
+        "amazonwebservices.amazon-q-vscode",
+        "dbaeumer.vscode-eslint",
+        "GitHub.copilot-chat"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "tmux",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
         "editor.formatOnType": false,
         "editor.formatOnPaste": true,
@@ -46,8 +47,7 @@
           "source.organizeImports": true
         },
         "[typescript][typescriptreact]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
-          "vs-code-prettier-eslint.prettierLast": false
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "[json][jsonc]": {
           "editor.defaultFormatter": "esbenp.prettier-vscode"
