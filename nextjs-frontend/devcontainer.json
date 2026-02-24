@@ -4,9 +4,6 @@
     "dockerfile": "Dockerfile",
     "context": "."
   },
-  "appPort": [
-    3000
-  ],
   "containerEnv": {
     "SSH_CONTEXT": "default",
     "ZSH_PROFILE": "devcontainer",
