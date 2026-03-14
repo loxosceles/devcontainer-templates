@@ -1,0 +1,25 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "1000:1000"
+    env_file:
+      - .env
+    volumes:
+      - ..:/workspaces/${PROJECT_NAME}:cached
+      - ~/.devcontainer-config/config/zsh:/home/vscode/.config/zsh:ro
+      - ~/.devcontainer-config/config/tmux:/home/vscode/.config/tmux:ro
+      - ~/.devcontainer-config/config/git:/home/vscode/.config/git:ro
+      - ~/.devcontainer-config/ssh/contexts/personal:/home/vscode/.ssh:ro
+      - ~/.devcontainer-config/cache/${PROJECT_NAME}:/home/vscode/.cache
+      - ~/.devcontainer-config/data/${PROJECT_NAME}/zsh_history:/home/vscode/.zsh_history
+      - ~/.devcontainer-config/data/${PROJECT_NAME}/zsh_history_tmux:/home/vscode/.zsh_history_tmux
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WORKSPACE_ROOT=/workspaces/${PROJECT_NAME}
+      - PROJECT_NAME=${PROJECT_NAME}
+      - HOME=/home/vscode
+      - USER=vscode
+      - AWS_PAGER=
+    command: sleep infinity
