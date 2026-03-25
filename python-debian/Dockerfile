@@ -3,7 +3,7 @@ FROM ghcr.io/astral-sh/uv:${VARIANT}
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && \
     apt-get -y install --no-install-recommends \
-    neovim ranger tmux direnv zsh fzf && \
+    neovim ranger tmux direnv zsh fzf less && \
     apt-get clean
 
 RUN useradd -m -s /usr/bin/zsh -u 1000 vscode

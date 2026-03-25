@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/devcontainers/typescript-node:${VARIANT}
 # Dev tooling + AWS CLI (arch-aware for Apple Silicon) + GitHub CLI
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-    neovim ranger tmux direnv zsh unzip \
+    neovim ranger tmux direnv zsh unzip less \
     # AWS CLI v2
     && curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o /tmp/awscliv2.zip \
     && unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip \

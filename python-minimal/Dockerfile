@@ -11,7 +11,7 @@ RUN chmod +x /usr/src/post_create.sh
 # Install minimal tools
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
-    neovim ranger tmux direnv \
+    neovim ranger tmux direnv less \
     && apt-get clean
 
 # Install uv and ruff system-wide

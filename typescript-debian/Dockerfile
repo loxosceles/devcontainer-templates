@@ -4,7 +4,7 @@ FROM node:${VARIANT}
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && \
     apt-get -y install --no-install-recommends \
     neovim ranger tmux direnv zsh \
-    docker.io curl unzip fzf && \
+    docker.io curl unzip fzf less && \
     apt-get clean
 
 # AWS CLI
